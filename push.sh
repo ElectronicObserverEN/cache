@@ -5,7 +5,7 @@ export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 
 git add .
 TZ=Asia/Tokyo git commit -m "$(date +%Y-%m-%d)"
-git push git@github.com:gre4bee/gre4bee.github.io master
+git push origin master
 
 # TODO: ???
 
