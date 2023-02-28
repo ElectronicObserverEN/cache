@@ -12,3 +12,10 @@ This cache can be used to bypass the gadget server block:
 ## Updating
 
 Continuously run `update.js` under Japanese network.
+
+## Prequisites
+
+
+- NodeJS (https://nodejs.org/en/)
+- RunJS (https://www.npmjs.com/package/runjs)
+- Yarn (https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
