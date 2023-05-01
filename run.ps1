@@ -1,1 +1,1 @@
-runjs update.js
+node update.js
