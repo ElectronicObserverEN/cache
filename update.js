@@ -1,4 +1,4 @@
-const { spawnSync } = require('child_process')
+const { spawn } = require('child_process')
 const { createServer } = require('http')
 const { map } = require('bluebird')
 const { readFileSync, outputFileSync, outputJsonSync } = require('fs-extra')
@@ -32,7 +32,7 @@ const main = async () => {
   try {
     if (await update()) {
       outputJsonSync('last-modified.json', fromPairs(sortBy(toPairs(lastModified), e => e[0])), { spaces: 2 })
-      spawnSync('./push.sh', [])
+      spawn("push.sh", [])
     }
   } catch (e) {
     console.log(`error  : ${e.toString()}`)
