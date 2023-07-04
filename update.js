@@ -32,7 +32,7 @@ const main = async () => {
   try {
     if (await update()) {
       outputJsonSync('last-modified.json', fromPairs(sortBy(toPairs(lastModified), e => e[0])), { spaces: 2 })
-      spawn("push.sh", [])
+      spawn("../push.sh", [])
     }
   } catch (e) {
     console.log(`error  : ${e.toString()}`)
