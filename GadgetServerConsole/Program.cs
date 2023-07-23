@@ -30,6 +30,10 @@ async Task Update()
 				JsonRoot![line] = res.Content.Headers.LastModified;
 				isModified = true;
 			}
+			else
+			{
+				Console.WriteLine(path + ":" + res.StatusCode + " " + res.ReasonPhrase);
+			}
 		}
 		catch (Exception ex)
 		{
