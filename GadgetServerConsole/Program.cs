@@ -48,7 +48,7 @@ void GitPush()
 	DateTime now = DateTime.UtcNow + new TimeSpan(9, 0, 0);
 	string gitCommand = "git";
 	string gitAddArgument = "add -A";
-	string gitCommitArgument = $"commit -m \"{now:dd-mm-yyyy}\" --author=\"gre4bee <gre4bee@address.com>\"";
+	string gitCommitArgument = $"commit -m \"{now:dd-mm-yyyy}\" --author=\"gre4bee <1538175+gre4bee@users.noreply.github.com>\"";
 	string gitPushArgument = "push origin dev";
 
 	Process.Start(gitCommand, gitAddArgument);
