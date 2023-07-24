@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
+using System.Net;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -10,6 +11,8 @@ bool isModified = false;
 JsonNode? JsonRoot = JsonNode.Parse(LastModifiedText);
 JsonObject? parseDocument = JsonSerializer.Deserialize<JsonObject>(LastModifiedText);
 PeriodicTimer timer = new(period: TimeSpan.FromMinutes(5));
+JsonSerializerOptions options = new() { WriteIndented = true };
+
 async Task Update()
 {
 	foreach (string? line in parseDocument!.Select(line => line.Key))
@@ -41,7 +44,7 @@ async Task Update()
 		}
 		if (isModified)
 		{
-			string outputjson = JsonSerializer.Serialize(JsonRoot);
+			string outputjson = JsonSerializer.Serialize(JsonRoot, options);
 			File.WriteAllText(LastModified, outputjson);
 		}
 	}
