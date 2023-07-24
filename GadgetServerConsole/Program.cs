@@ -22,7 +22,7 @@ async Task Update()
 		{
 			using HttpClient httpClient = new();
 			DateTime date = DateTime.Parse(JsonRoot![line].AsValue().ToString());
-			httpClient.DefaultRequestHeaders.Add("if-modified-since", date.ToLongDateString());
+			httpClient.DefaultRequestHeaders.Add("if-modified-since", date.ToString("ddd, dd MMM yyyy HH:mm:ss zzzz"));
 			using HttpResponseMessage res = await httpClient.GetAsync(line);
 			if (res.IsSuccessStatusCode)
 			{
@@ -31,12 +31,12 @@ async Task Update()
 				ms.Seek(0, SeekOrigin.Begin);
 				ms.CopyTo(fs);
 				Console.WriteLine(path + ":" + res.Content.Headers.LastModified);
-				JsonRoot![line] = res.Content.Headers.LastModified;
+				JsonRoot![line] = res.Content.Headers.LastModified.ToString();
 				isModified = true;
 			}
 			else
 			{
-				Console.WriteLine(path + ":" + res.StatusCode + " " + res.ReasonPhrase);
+				Console.WriteLine(path + ":" + res.StatusCode);
 			}
 		}
 		catch (Exception ex)
