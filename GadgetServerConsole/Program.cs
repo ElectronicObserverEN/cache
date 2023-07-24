@@ -21,7 +21,8 @@ async Task Update()
 		try
 		{
 			using HttpClient httpClient = new();
-			httpClient.DefaultRequestHeaders.Add("if-modified-since", JsonRoot![line].AsValue().ToString());
+			DateTime date = DateTime.Parse(JsonRoot![line].AsValue().ToString());
+			httpClient.DefaultRequestHeaders.Add("if-modified-since", date.ToLongDateString());
 			using HttpResponseMessage res = await httpClient.GetAsync(line);
 			if (res.IsSuccessStatusCode)
 			{
