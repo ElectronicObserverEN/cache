@@ -57,7 +57,7 @@ void GitPush()
 	string gitCommand = "git";
 	string gitAddArgument = "add -A";
 	string gitCommitArgument = $"commit -m \"{now:dd-mm-yyyy}\" --author=\"gre4bee <1538175+gre4bee@users.noreply.github.com>\"";
-	string gitPushArgument = "push origin dev";
+	string gitPushArgument = "push origin master";
 
 	Process.Start(gitCommand, gitAddArgument);
 	Process.Start(gitCommand, gitCommitArgument);
