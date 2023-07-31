@@ -17,11 +17,11 @@ async Task Update()
 {
 	foreach (string? line in parseDocument!.Select(line => line.Key))
 	{
-		var path = line.Replace("http://203.104.209.7/", "");
+		String path = line.Replace("http://203.104.209.7/", "");
 		try
 		{
 			using HttpClient httpClient = new();
-			DateTime date = DateTime.Parse(JsonRoot![line].AsValue().ToString());
+			DateTime date = DateTime.Parse(JsonRoot![line]!.AsValue().ToString());
 			httpClient.DefaultRequestHeaders.Add("if-modified-since", date.ToString("ddd, dd MMM yyyy HH:mm:ss zzzz"));
 			using HttpResponseMessage res = await httpClient.GetAsync(line);
 			if (res.IsSuccessStatusCode)
@@ -34,7 +34,7 @@ async Task Update()
 				JsonRoot![line] = res.Content.Headers.LastModified.ToString();
 				isModified = true;
 			}
-			else
+			else if (res.StatusCode != HttpStatusCode.NotModified)
 			{
 				Console.WriteLine(path + ":" + res.StatusCode);
 			}
@@ -63,10 +63,14 @@ void GitPush()
 	Process.Start(gitCommand, gitCommitArgument);
 	Process.Start(gitCommand, gitPushArgument);
 }
+Console.WriteLine("start:" + DateTime.Now.ToString());
 await Update();
 GitPush();
+Console.WriteLine("finish:" + DateTime.Now.ToString());
 while (await timer.WaitForNextTickAsync())
 {
+	Console.WriteLine("start:" + DateTime.Now.ToString());
 	await Update();
 	GitPush();
+	Console.WriteLine("finish:" + DateTime.Now.ToString());
 }
