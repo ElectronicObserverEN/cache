@@ -31,7 +31,10 @@ async Task Update()
 				ms.Seek(0, SeekOrigin.Begin);
 				ms.CopyTo(fs);
 				Console.WriteLine(path + ":" + res.Content.Headers.LastModified);
-				JsonRoot![line] = res.Content.Headers.LastModified.ToString();
+				if (res.Content.Headers.LastModified.HasValue)
+				{
+					JsonRoot![line] = res.Content.Headers.LastModified.Value.DateTime.ToString("ddd, dd MMM yyyy HH:mm:ss zzzz");
+				}
 				isModified = true;
 			}
 			else if (res.StatusCode != HttpStatusCode.NotModified)
@@ -56,7 +59,7 @@ void GitPush()
 	DateTime now = DateTime.Now;
 	string gitCommand = "git";
 	string gitAddArgument = "add -A";
-	string gitCommitArgument = $"commit -m \"{now:dd-mm-yyyy}\" --author=\"gre4bee <1538175+gre4bee@users.noreply.github.com>\"";
+	string gitCommitArgument = $"commit -m \"{now:dd-MM-yyyy}\" --author=\"gre4bee <1538175+gre4bee@users.noreply.github.com>\"";
 	string gitPushArgument = "push origin master";
 
 	Process.Start(gitCommand, gitAddArgument);
