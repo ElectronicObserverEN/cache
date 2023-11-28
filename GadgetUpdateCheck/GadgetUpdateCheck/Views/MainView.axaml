@@ -26,6 +26,7 @@
 			<Button Command="{Binding UpdateCommand}" Content="Update" />
 			<Button Command="{Binding GetIpCommand}" Content="Get IP" />
 			<Button Command="{Binding GitPushCommand}" Content="Push" />
+			<CheckBox Content="NoCache" IsChecked="{Binding NoCache}" />
 		</StackPanel>
 
 		<TextBlock Grid.Row="1" Text="{Binding CountdownText}" />

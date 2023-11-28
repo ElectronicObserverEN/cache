@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,6 +32,9 @@ public partial class MainViewModel : ViewModelBase
 
 	[ObservableProperty]
 	private bool _checkingForUpdates;
+
+	[ObservableProperty]
+	private bool _noCache;
 
 	public ObservableCollection<string> Log { get; } = new();
 
@@ -78,6 +82,10 @@ public partial class MainViewModel : ViewModelBase
 			using HttpClient httpClient = new();
 
 			httpClient.DefaultRequestHeaders.Add("if-modified-since", lastModified.ToString("R"));
+			httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue()
+			{
+				NoCache = NoCache,
+			};
 
 			using HttpResponseMessage res = await httpClient.GetAsync(url, cancellationToken);
 
