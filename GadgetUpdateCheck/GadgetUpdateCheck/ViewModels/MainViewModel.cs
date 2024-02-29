@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -36,7 +37,28 @@ public partial class MainViewModel : ViewModelBase
 	[ObservableProperty]
 	private bool _noCache;
 
+	[ObservableProperty]
+	private string? _proxy;
+
 	public ObservableCollection<string> Log { get; } = new();
+
+	private HttpClient MakeHttpClient()
+	{
+		if (string.IsNullOrEmpty(Proxy))
+		{
+			return new();
+		}
+
+		WebProxy proxy = new(Proxy);
+
+		HttpClientHandler httpClientHandler = new()
+		{
+			Proxy = proxy,
+			UseProxy = true,
+		};
+
+		return new(httpClientHandler);
+	}
 
 	[RelayCommand(IncludeCancelCommand = true)]
 	private async Task Update(CancellationToken cancellationToken)
@@ -79,7 +101,7 @@ public partial class MainViewModel : ViewModelBase
 
 		try
 		{
-			using HttpClient httpClient = new();
+			using HttpClient httpClient = MakeHttpClient();
 
 			httpClient.DefaultRequestHeaders.Add("if-modified-since", lastModified.ToString("R"));
 			httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue()
@@ -114,7 +136,7 @@ public partial class MainViewModel : ViewModelBase
 	[RelayCommand]
 	private async Task GetIp()
 	{
-		HttpClient client = new();
+		HttpClient client = MakeHttpClient();
 
 		HttpResponseMessage response = await client.GetAsync("https://api.ipify.org");
 

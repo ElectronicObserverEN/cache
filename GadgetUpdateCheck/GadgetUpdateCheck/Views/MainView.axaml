@@ -27,6 +27,10 @@
 			<Button Command="{Binding GetIpCommand}" Content="Get IP" />
 			<Button Command="{Binding GitPushCommand}" Content="Push" />
 			<CheckBox Content="NoCache" IsChecked="{Binding NoCache}" />
+			<TextBox
+				Text="{Binding Proxy}"
+				ToolTip.Tip="Only gets used when a value is set - Example: localhost:40623"
+				Watermark="Proxy" />
 		</StackPanel>
 
 		<TextBlock Grid.Row="1" Text="{Binding CountdownText}" />
