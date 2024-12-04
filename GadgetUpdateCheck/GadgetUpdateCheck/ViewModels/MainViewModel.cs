@@ -97,7 +97,7 @@ public partial class MainViewModel : ViewModelBase
 
 	private async Task<DateTime?> FetchFile(string url, DateTime lastModified, CancellationToken cancellationToken)
 	{
-		string path = url.Replace("http://203.104.209.7/", "");
+		string path = url.Replace("http://w00g.kancolle-server.com/", "");
 
 		try
 		{
